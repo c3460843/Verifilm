@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Verifilm</string>
+    <string name="title_activity_select_film">SelectFilmActivity</string>
+</resources>

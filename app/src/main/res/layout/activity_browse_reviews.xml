@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="c346084.verifilm.BrowseReviews">
+
+
+    <LinearLayout
+        android:layout_width="395dp"
+        android:layout_height="587dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="Submissions"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/imageButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="TODO"
+                    app:srcCompat="@mipmap/ic_launcher" />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="7dp" />
+
+                    <TextView
+                        android:id="@+id/textViewFilmTitle1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="46dp" />
+
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="TODO"
+                    app:srcCompat="@mipmap/ic_launcher" />
+
+                <Space
+                    android:layout_width="15dp"
+                    android:layout_height="17dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="7dp" />
+
+                    <TextView
+                        android:id="@+id/textViewFilmTitle2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="46dp" />
+
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="350dp"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/imageButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="TODO"
+                    app:srcCompat="@mipmap/ic_launcher" />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="7dp" />
+
+                    <TextView
+                        android:id="@+id/textViewFilmTitle3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="46dp" />
+
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/imageButton4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="TODO"
+                    app:srcCompat="@mipmap/ic_launcher" />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="7dp" />
+
+                    <TextView
+                        android:id="@+id/textViewFilmTitle4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="46dp" />
+
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/imageButton5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="TODO"
+                    app:srcCompat="@mipmap/ic_launcher" />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="7dp" />
+
+                    <TextView
+                        android:id="@+id/textViewFilmTitle5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="46dp" />
+
+                </LinearLayout>
+
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
