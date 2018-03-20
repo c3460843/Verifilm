@@ -23,7 +23,7 @@ public class SelectListing extends AppCompatActivity {
         backgroundTask.execute("listings", cinemaID, filmID);
         final Spinner spinner2 = findViewById(R.id.spinner_listings);
         try {
-            Thread.sleep(100);
+            Thread.sleep(1000);
 
             ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,backgroundTask.listings);
             adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -32,7 +32,9 @@
         <activity android:name=".ReviewForm" />
         <activity android:name=".SelectFilm" />
         <activity android:name=".SelectListing" />
-        <activity android:name=".BrowseReviews"></activity>
+        <activity android:name=".BrowseReviews" />
+        <activity android:name=".SelectedReview" />
+        <activity android:name=".FullReview"></activity>
     </application>
 
 </manifest>

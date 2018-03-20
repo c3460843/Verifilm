@@ -53,7 +53,7 @@ public class ReviewForm extends AppCompatActivity {
         BackgroundTask backgroundTask = new BackgroundTask(this);
         backgroundTask.execute("submit",summary,rating,listingID, userID);
 
-        Thread.sleep(100);
+        Thread.sleep(1000);
         startActivity(new Intent(this,Home.class));
     }
 }

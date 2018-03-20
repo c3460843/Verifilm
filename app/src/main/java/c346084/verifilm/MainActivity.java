@@ -25,7 +25,7 @@ public class MainActivity extends Activity{
 
     public void userReg(View view)
     {
-        System.out.println("(0)MainActivity.userReg.startActivity(Register)");
+        System.out.println("(1)MainActivity.userReg.startActivity(Register)");
         startActivity(new Intent(this,Register.class));
     }
 

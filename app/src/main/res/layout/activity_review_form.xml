@@ -44,7 +44,7 @@
     <EditText
         android:id="@+id/editTextSummary"
         android:layout_width="371dp"
-        android:layout_height="144dp"
+        android:layout_height="197dp"
         android:ems="10"
         android:hint="Summary"
         android:inputType="textMultiLine"

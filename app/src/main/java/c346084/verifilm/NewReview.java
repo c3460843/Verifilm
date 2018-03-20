@@ -66,16 +66,17 @@ public class NewReview extends AppCompatActivity {
             System.out.println("loc<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             LocationManager lm = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location == null) { location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER); }
             if (location != null) {
                 longitude = location.getLongitude();
                 latitude = location.getLatitude();
-                DecimalFormat df = new DecimalFormat("#.###");
-                df.setRoundingMode(RoundingMode.CEILING);
+                DecimalFormat df = new DecimalFormat("#.##");
+                //df.setRoundingMode(RoundingMode.CEILING);
                 longitudeString = df.format(longitude);
                 latitudeString = df.format(latitude);
             } else {
-                longitudeString = "0.000";
-                latitudeString = "0.000";
+                longitudeString = "0.00";
+                latitudeString = "0.00";
             }
 
             System.out.println("middle<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -101,7 +102,7 @@ public class NewReview extends AppCompatActivity {
         backgroundTask.execute("cinemas", longitudeString, latitudeString);
         TextView textViewCinema = findViewById(R.id.textViewCinema);
 
-        Thread.sleep(100);
+        Thread.sleep(1000);
 
         cinemaName = backgroundTask.cinemaName;
         cinemaID = backgroundTask.cinemaID;
