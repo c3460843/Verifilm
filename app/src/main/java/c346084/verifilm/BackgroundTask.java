@@ -32,6 +32,8 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     String userID;
     String cinemaID;
     String cinemaName;
+    String selectedSummary;
+    String selectedReview;
     List<String> films = new ArrayList<String>();
     List<String> filmIDs = new ArrayList<String>();
     List<String> listings = new ArrayList<String>();
@@ -64,6 +66,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
         String gl_url = "http://"+liveAddress+"/verifilm/getListings.php";
         String submit_url = "http://"+liveAddress+"/verifilm/submit.php";
         String gr_url = "http://"+liveAddress+"/verifilm/getReviews.php";
+        String sr_url = "http://"+liveAddress+"/verifilm/getSelectedReview.php";
         String method = params[0];
 
         switch (method) {
@@ -337,6 +340,43 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                         }catch (java.lang.ArrayIndexOutOfBoundsException e){
                             //TODO
                         }
+                    }
+                    bufferedReader.close();
+                    IS.close();
+                    //httpURLConnection.connect();
+                    httpURLConnection.disconnect();
+                    //return "Success...";
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "selectedReview":
+                String review_id = params[1];
+                try {
+                    URL url = new URL(sr_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("GET");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String data = URLEncoder.encode("review_id", "UTF-8") + "=" + URLEncoder.encode(review_id, "UTF-8");
+                    bufferedWriter.write(data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream IS = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(IS, "iso-8859-1"));
+                    String line;
+                    line = bufferedReader.readLine();
+                    try{
+                        String[] splitLine = line.split("#");
+                        selectedSummary = splitLine[0];
+                        selectedReview = splitLine[1];
+                    }catch (java.lang.ArrayIndexOutOfBoundsException e){
+                        //TODO
                     }
                     bufferedReader.close();
                     IS.close();

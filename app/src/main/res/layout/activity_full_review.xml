@@ -7,7 +7,7 @@
     tools:context="c346084.verifilm.FullReview">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextFull"
         android:layout_width="330dp"
         android:layout_height="471dp"
         android:ems="10"
@@ -27,5 +27,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextFull" />
 </android.support.constraint.ConstraintLayout>
