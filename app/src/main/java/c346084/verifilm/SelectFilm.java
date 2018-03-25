@@ -7,11 +7,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class SelectFilm extends AppCompatActivity {
     public static String userID;
     String film;
     String filmID;
+    static boolean response = false;
+    int responseTimer = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,12 +24,22 @@ public class SelectFilm extends AppCompatActivity {
         backgroundTask.execute("films");
         final Spinner spinner1 = findViewById(R.id.spinner_film);
         try {
-            Thread.sleep(1000);
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,backgroundTask.films);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner1.setAdapter(adapter);
-
+            response = false;
+            while (response == false) {
+                Thread.sleep(100);
+                responseTimer++;
+                if (responseTimer >= 50) {
+                    startActivity(new Intent(this, Home.class));
+                    Toast.makeText(getApplicationContext(), "Connection timed out.", Toast.LENGTH_LONG).show();
+                    break;
+                }
+            }
+            if (response == true) {
+                responseTimer = 0;
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, backgroundTask.films);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner1.setAdapter(adapter);
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -33,17 +47,9 @@ public class SelectFilm extends AppCompatActivity {
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                System.out.println(spinner1.getSelectedItem().toString());
-
                 film = spinner1.getSelectedItem().toString();
-                System.out.println("Find " + film + "'s index for ID.");
-
                 int i = backgroundTask.films.indexOf(film);
-                System.out.println(i + " = filmID index.");
-
                 filmID = backgroundTask.filmIDs.get(i);
-                System.out.println(filmID +" = filmID value.");
-
             }
 
             @Override

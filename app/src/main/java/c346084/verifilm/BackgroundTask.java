@@ -27,13 +27,14 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  */
 
 public class BackgroundTask extends AsyncTask<String,Void,String> {
-    AlertDialog alertDialog;
     Context ctx;
     String userID;
     String cinemaID;
     String cinemaName;
     String selectedSummary;
     String selectedReview;
+    static String loginMessage="";
+    String fullReviewMessage="";
     List<String> films = new ArrayList<String>();
     List<String> filmIDs = new ArrayList<String>();
     List<String> listings = new ArrayList<String>();
@@ -48,25 +49,20 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     {
         this.ctx =ctx;
     }
-    @Override
-    protected void onPreExecute() {
-        System.out.println("(1)BackgroundTask.onPreExecute");
-        alertDialog = new AlertDialog.Builder(ctx).create();
-        alertDialog.setTitle("Login Information....");
-    }
+
     @Override
     protected String doInBackground(String... params) {
-        System.out.println("(2)BackgroundTask.doInBackground("+params[0]+")");
         String localTestAddress = "10.0.2.2";
         String liveAddress = "mungovin.000webhostapp.com";
-        String reg_url = "http://"+liveAddress+"/verifilm/register.php";
-        String login_url = "http://"+liveAddress+"/verifilm/login.php";
-        String gc_url = "http://"+liveAddress+"/verifilm/getCinemas.php";
-        String gf_url = "http://"+liveAddress+"/verifilm/getFilms.php";
-        String gl_url = "http://"+liveAddress+"/verifilm/getListings.php";
-        String submit_url = "http://"+liveAddress+"/verifilm/submit.php";
-        String gr_url = "http://"+liveAddress+"/verifilm/getReviews.php";
-        String sr_url = "http://"+liveAddress+"/verifilm/getSelectedReview.php";
+        String reg_url = "http://" + liveAddress + "/verifilm/register.php";
+        String login_url = "http://" + liveAddress + "/verifilm/login.php";
+        String gc_url = "http://" + liveAddress + "/verifilm/getCinemas.php";
+        String gf_url = "http://" + liveAddress + "/verifilm/getFilms.php";
+        String gl_url = "http://" + liveAddress + "/verifilm/getListings.php";
+        String submit_url = "http://" + liveAddress + "/verifilm/submit.php";
+        String gr_url = "http://" + liveAddress + "/verifilm/getReviews.php";
+        String sr_url = "http://" + liveAddress + "/verifilm/getSelectedReview.php";
+        String fr_url = "http://" + liveAddress + "/verifilm/setFullReview.php";
         String method = params[0];
 
         switch (method) {
@@ -93,7 +89,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     IS.close();
                     //httpURLConnection.connect();
                     httpURLConnection.disconnect();
-                    return "Registration Success...";
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -119,26 +114,21 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     outputStream.close();
                     InputStream inputStream = httpURLConnection.getInputStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
-                    String response = "";
-                    String line = "";
+                    String line;
                     while ((line = bufferedReader.readLine()) != null) {
-                        System.out.println("(3)BackgroundTask.doInBackground(login).line = "+line);
                         String[] splitLine = line.split("#");
                         userID = splitLine[0];
-                        try
-                        {
-                            response += splitLine[1];
-                            MainActivity.userAuthenticated=true;
-                        }
-                        catch(java.lang.ArrayIndexOutOfBoundsException ex)
-                        {
-                            MainActivity.userAuthenticated=false;
+                        try {
+                            loginMessage = splitLine[1];
+                            MainActivity.userAuthenticated = true;
+                        } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+                            MainActivity.userAuthenticated = false;
                         }
                     }
                     bufferedReader.close();
                     inputStream.close();
                     httpURLConnection.disconnect();
-                    return response;
+                    MainActivity.response = true;
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -167,26 +157,20 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     String line;
                     int i = 0;
                     while ((line = bufferedReader.readLine()) != null) {
-                        System.out.println("---------------------------------------------------------");
-                        System.out.println("line " + i);
-                        System.out.println(line);
                         String[] splitLine = line.split("#");
                         i++;
-                        System.out.println("---------------------------------------------------------");
-                        System.out.println("cinemaName before: " + cinemaName);
-                        try{
+                        try {
                             cinemaID = splitLine[0];
                             cinemaName = splitLine[1];
-                        }catch (java.lang.ArrayIndexOutOfBoundsException e){
-
+                        } catch (java.lang.ArrayIndexOutOfBoundsException e) {
+                            //TO DO
                         }
-                        System.out.println("cinemaName after: " + cinemaName);
                     }
                     bufferedReader.close();
                     IS.close();
                     //httpURLConnection.connect();
                     httpURLConnection.disconnect();
-                    //return "Success...";
+                    NewReview.response = true;
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -209,16 +193,12 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                         filmIDs.add(i, splitLine[0]);
                         films.add(i, splitLine[1]);
                         i++;
-                        System.out.println("---------------------------------------------------------");
-                        System.out.println(line);
-                        System.out.println(i);
-                        System.out.println("---------------------------------------------------------");
                     }
                     bufferedReader.close();
                     IS.close();
                     //httpURLConnection.connect();
                     httpURLConnection.disconnect();
-                    //return "Success...";
+                    SelectFilm.response = true;
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -247,7 +227,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     String line;
                     int i = 0;
                     while ((line = bufferedReader.readLine()) != null) {
-                        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>LISTING>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+line);
                         String[] splitLine = line.split("#");
                         listingIDs.add(i, splitLine[0]);
                         listings.add(i, splitLine[1]);
@@ -257,7 +236,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     IS.close();
                     //httpURLConnection.connect();
                     httpURLConnection.disconnect();
-                    //return "Success...";
+                    SelectListing.response = true;
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -269,7 +248,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 String rating = params[2];
                 String listingID = params[3];
                 String userID = params[4];
-
                 try {
                     URL url = new URL(submit_url);
                     HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -287,18 +265,17 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     bufferedWriter.close();
                     OS.close();
                     InputStream IS = httpURLConnection.getInputStream();
-                    IS.close();
-                    //httpURLConnection.connect();
+                    httpURLConnection.connect();
                     httpURLConnection.disconnect();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(IS, "iso-8859-1"));
                     String line;
                     int i = 0;
                     while ((line = bufferedReader.readLine()) != null) {
-                        System.out.println(line);
+                        //System.out.println(line);
                     }
                     bufferedReader.close();
                     IS.close();
-                    return "Submission success...";
+                    ReviewForm.response = true;
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -325,19 +302,16 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     String line;
                     int i = 0;
                     while ((line = bufferedReader.readLine()) != null) {
-                        System.out.println("---------------------------------------------------------");
-                        System.out.println("line " + i);
-                        System.out.println(line);
+                        //System.out.println(line);
                         String[] splitLine = line.split("#");
-                        System.out.println("---------------------------------------------------------");
-                        try{
-                            reviewIDs.add(i, splitLine[0]);
+                        try {
                             reviewRatings.add(i, Float.parseFloat(splitLine[1]));
                             reviewListingIDs.add(i, splitLine[2]);
                             reviewUserIDs.add(i, splitLine[3]);
                             reviewFilmNames.add(i, splitLine[4]);
+                            reviewIDs.add(i, splitLine[0]); //Will add blank entry to array list which causes BrowseReviews to display 1 extra review if splitLine[1,2,3,4] aren't added first.
                             i++;
-                        }catch (java.lang.ArrayIndexOutOfBoundsException e){
+                        } catch (java.lang.ArrayIndexOutOfBoundsException e) {
                             //TODO
                         }
                     }
@@ -345,7 +319,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     IS.close();
                     //httpURLConnection.connect();
                     httpURLConnection.disconnect();
-                    //return "Success...";
+                    BrowseReviews.response = true;
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -371,18 +345,53 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(IS, "iso-8859-1"));
                     String line;
                     line = bufferedReader.readLine();
-                    try{
+                    try {
                         String[] splitLine = line.split("#");
                         selectedSummary = splitLine[0];
                         selectedReview = splitLine[1];
-                    }catch (java.lang.ArrayIndexOutOfBoundsException e){
+                    } catch (java.lang.ArrayIndexOutOfBoundsException e) {
                         //TODO
                     }
                     bufferedReader.close();
                     IS.close();
                     //httpURLConnection.connect();
                     httpURLConnection.disconnect();
-                    //return "Success...";
+                    BrowseReviews.response = true;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "fullReview":
+                String full_review_id = params[1];
+                String full_review = params[2];
+                try {
+                    URL url = new URL(fr_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    //httpURLConnection.setDoInput(true);
+                    OutputStream OS = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
+                    String data = URLEncoder.encode("full_review_id", "UTF-8") + "=" + URLEncoder.encode(full_review_id, "UTF-8") +
+                            "&" + URLEncoder.encode("full_review", "UTF-8") + "=" + URLEncoder.encode(full_review, "UTF-8");
+                    bufferedWriter.write(data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    OS.close();
+                    InputStream IS = httpURLConnection.getInputStream();
+                    httpURLConnection.connect();
+                    //httpURLConnection.disconnect();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(IS, "iso-8859-1"));
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        fullReviewMessage = line;
+                    }
+                    bufferedReader.close();
+                    httpURLConnection.disconnect();
+                    IS.close();
+                    FullReview.response = true;
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -392,23 +401,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
         }
         return null;
     }
-    @Override
-    protected void onProgressUpdate(Void... values) {
-        super.onProgressUpdate(values);
-    }
-
-/*
-    @Override
-    protected void onPostExecute(String result) {
-        if(result.equals("Registration Success...")) {
-            Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
-        }
-        else {
-            alertDialog.setMessage(result);
-            alertDialog.show();
-        }
-    }
-*/
 }
 
 

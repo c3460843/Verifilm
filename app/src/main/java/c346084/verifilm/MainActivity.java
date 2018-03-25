@@ -2,6 +2,7 @@ package c346084.verifilm;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.app.Activity;
 import android.widget.EditText;
@@ -12,39 +13,50 @@ import java.util.Objects;
 public class MainActivity extends Activity{
     static String userID;
     static boolean userAuthenticated;
-    EditText ET_NAME,ET_PASS;
+    EditText user_name,user_pass;
     String login_name,login_pass;
+    static boolean response=false;
+    int responseTimer=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("(0)MainActivity.onCreate");
         setContentView(R.layout.activity_main);
-        ET_NAME = findViewById(R.id.user_name);
-        ET_PASS = findViewById(R.id.user_pass);
+        user_name = findViewById(R.id.user_name);
+        user_pass = findViewById(R.id.user_pass);
     }
 
     public void userReg(View view)
     {
-        System.out.println("(1)MainActivity.userReg.startActivity(Register)");
         startActivity(new Intent(this,Register.class));
     }
 
     public void userLogin(View view) throws InterruptedException {
-        System.out.println("(1)MainActivity.userLogin");
-        login_name = ET_NAME.getText().toString();
-        login_pass = ET_PASS.getText().toString();
-        String method = "login";
-        System.out.println("(2)MainActivity.userLogin.backgroundTask");
+        login_name = user_name.getText().toString();
+        login_pass = user_pass.getText().toString();
         BackgroundTask backgroundTask = new BackgroundTask(this);
-        backgroundTask.execute(method,login_name,login_pass);
-        Thread.sleep(1000);
-        userID=backgroundTask.userID;
-        System.out.println("(3)MainActivity.userLogin.backgroundTask.userID = "+backgroundTask.userID);
-        System.out.println("(4)MainActivity.userLogin.MainActivity.userID = "+userID);
-        System.out.println("(5)MainActivity.userLogin.userAuthenticated = "+userAuthenticated);
-        if(userAuthenticated==true) {
-            System.out.println("(6)MainActivity.userLogin.startActivity(Home)");
-            startActivity(new Intent(this, Home.class));
+        backgroundTask.execute("login",login_name,login_pass);
+        response = false;
+        while (response == false)
+        {
+            Thread.sleep(100);
+            responseTimer++;
+            if (responseTimer >=50)
+            {
+                startActivity(new Intent(this, Home.class));
+                Toast.makeText(getApplicationContext(), "Connection timed out.", Toast.LENGTH_LONG).show();
+                break;
+            }
+        }
+        if (response == true)
+        {
+            responseTimer = 0;
+            userID = backgroundTask.userID;
+            if (userAuthenticated == true) {
+                startActivity(new Intent(this, Home.class));
+            }else if (userAuthenticated == false) {
+                Toast.makeText(getApplicationContext(), userID, Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

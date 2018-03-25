@@ -37,6 +37,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class NewReview extends AppCompatActivity {
 
@@ -47,6 +48,8 @@ public class NewReview extends AppCompatActivity {
     String longitudeString;
     String latitudeString;
     static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    static boolean response = false;
+    int responseTimer = 0;
 
 
     @Override
@@ -54,36 +57,28 @@ public class NewReview extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_review);
 
-        System.out.println("start<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(NewReview.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-            System.out.println("permission check<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             return;
         }
-            System.out.println("loc<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-            LocationManager lm = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (location == null) { location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER); }
-            if (location != null) {
-                longitude = location.getLongitude();
-                latitude = location.getLatitude();
-                DecimalFormat df = new DecimalFormat("#.##");
-                //df.setRoundingMode(RoundingMode.CEILING);
-                longitudeString = df.format(longitude);
-                latitudeString = df.format(latitude);
-            } else {
-                longitudeString = "0.00";
-                latitudeString = "0.00";
-            }
-
-            System.out.println("middle<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-            System.out.println(longitudeString);
-            System.out.println(latitudeString);
-            System.out.println("end<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-
+        LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location == null) {
+            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
+        if (location != null) {
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+            DecimalFormat df = new DecimalFormat("#.##");
+            df.setRoundingMode(RoundingMode.DOWN);
+            longitudeString = df.format(longitude);
+            latitudeString = df.format(latitude);
+        } else {
+            longitudeString = "0.00";
+            latitudeString = "0.00";
+        }
         try {
             populate();
         } catch (InterruptedException e) {
@@ -97,20 +92,28 @@ public class NewReview extends AppCompatActivity {
 
 
     public void populate() throws InterruptedException {
-
+        response = false;
         BackgroundTask backgroundTask = new BackgroundTask(this);
         backgroundTask.execute("cinemas", longitudeString, latitudeString);
         TextView textViewCinema = findViewById(R.id.textViewCinema);
-
-        Thread.sleep(1000);
-
-        cinemaName = backgroundTask.cinemaName;
-        cinemaID = backgroundTask.cinemaID;
-        SelectFilm.userID=backgroundTask.userID;
-        SelectListing.cinemaName = cinemaName;
-        SelectListing.cinemaID = cinemaID;
-        textViewCinema.setText(backgroundTask.cinemaName);
-        System.out.println("cinema name: " +backgroundTask.cinemaName);
+        while (response == false) {
+            Thread.sleep(100);
+            responseTimer++;
+            if (responseTimer >= 50) {
+                startActivity(new Intent(this, Home.class));
+                Toast.makeText(getApplicationContext(), "Connection timed out.", Toast.LENGTH_LONG).show();
+                break;
+            }
+        }
+        if (response == true) {
+            responseTimer = 0;
+            cinemaName = backgroundTask.cinemaName;
+            cinemaID = backgroundTask.cinemaID;
+            SelectFilm.userID = backgroundTask.userID;
+            SelectListing.cinemaName = cinemaName;
+            SelectListing.cinemaID = cinemaID;
+            textViewCinema.setText(cinemaName);
+        }
     }
 }
 

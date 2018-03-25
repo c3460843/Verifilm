@@ -7,16 +7,19 @@ package c346084.verifilm;
     import android.widget.EditText;
     import android.widget.RatingBar;
     import android.widget.TextView;
+    import android.widget.Toast;
 
 public class ReviewForm extends AppCompatActivity {
 
     public static String film;
     public static String listingID;
     public static String userID;
-    EditText ET_SUMMARY;
+    EditText editTextSummary;
     String summary;
     String rating;
     private RatingBar ratingBar;
+    static boolean response=false;
+    int responseTimer=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,7 @@ public class ReviewForm extends AppCompatActivity {
         TextView film_name = findViewById(R.id.textViewFilm);
         film_name.setText(film);
 
-        ET_SUMMARY = findViewById(R.id.editTextSummary);
+        editTextSummary = findViewById(R.id.editTextSummary);
         userID=MainActivity.userID;
         addListenerOnRatingBar();
     }
@@ -49,11 +52,25 @@ public class ReviewForm extends AppCompatActivity {
     }
 
     public void submit(View view) throws InterruptedException {
-        summary = ET_SUMMARY.getText().toString();
+        summary = editTextSummary.getText().toString();
         BackgroundTask backgroundTask = new BackgroundTask(this);
         backgroundTask.execute("submit",summary,rating,listingID, userID);
-
-        Thread.sleep(1000);
-        startActivity(new Intent(this,Home.class));
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+response);
+        while (response == false)
+        {
+            Thread.sleep(100);
+            responseTimer++;
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+responseTimer);
+            if (responseTimer >=50)
+            {
+                Toast.makeText(getApplicationContext(), "Connection timed out.", Toast.LENGTH_LONG).show();
+                break;
+            }
+        }
+        if (response == true) {
+            responseTimer = 0;
+            Toast.makeText(getApplicationContext(), "Submission Successful.", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, Home.class));
+        }
     }
 }
