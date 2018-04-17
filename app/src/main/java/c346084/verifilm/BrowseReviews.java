@@ -9,6 +9,9 @@ import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +27,11 @@ public class BrowseReviews extends AppCompatActivity {
     ImageButton imageButton3;
     ImageButton imageButton4;
     ImageButton imageButton5;
+    String imageUrl1;
+    String imageUrl2;
+    String imageUrl3;
+    String imageUrl4;
+    String imageUrl5;
     TextView textViewFilmTitle1;
     TextView textViewFilmTitle2;
     TextView textViewFilmTitle3;
@@ -37,21 +45,25 @@ public class BrowseReviews extends AppCompatActivity {
     List<Float> reviewRatings = new ArrayList<Float>();
     List<String> reviewListingIDs = new ArrayList<String>();
     List<String> reviewIDs = new ArrayList<String>();
+    List<String> reviewFilmIDs =  new ArrayList<String>();
     List<String> reviewFilmNames = new ArrayList<String>();
     static String selectedReviewID;
     static String selectedSummary;
     static String selectedFullReview;
-    static String selectedReviewFilm;
+    static String selectedReviewFilmID;
+    static String selectedReviewFilmName;
     static Float selectedReviewRating;
-    static boolean response=false;
+    static boolean response;
     int responseTimer=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_reviews);
+        response=false;
         try {
             populate();
+            System.out.println("populate()");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -65,7 +77,7 @@ public class BrowseReviews extends AppCompatActivity {
         {
             Thread.sleep(100);
             responseTimer++;
-            if (responseTimer >=50)
+            if (responseTimer >=BackgroundSettings.responseLimit)
             {
                 startActivity(new Intent(this, Home.class));
                 Toast.makeText(getApplicationContext(), "Connection timed out.", Toast.LENGTH_LONG).show();
@@ -79,7 +91,6 @@ public class BrowseReviews extends AppCompatActivity {
 
             buttonNext.setEnabled(false);
             buttonPrevious.setEnabled(false);
-
             imageButton1 = findViewById(R.id.imageButton1);
             imageButton2 = findViewById(R.id.imageButton2);
             imageButton3 = findViewById(R.id.imageButton3);
@@ -98,6 +109,7 @@ public class BrowseReviews extends AppCompatActivity {
             reviewRatings = backgroundTask.reviewRatings;
             reviewListingIDs = backgroundTask.reviewListingIDs;
             reviewIDs = backgroundTask.reviewIDs;
+            reviewFilmIDs = backgroundTask.reviewFilmIDs;
             reviewFilmNames = backgroundTask.reviewFilmNames;
 
             if (reviewIDs.size() > 5) {
@@ -105,6 +117,7 @@ public class BrowseReviews extends AppCompatActivity {
             }
 
             setVisibilityFields();
+            setIcons();
 
             ratingBar1.setIsIndicator(true);
             ratingBar2.setIsIndicator(true);
@@ -112,6 +125,52 @@ public class BrowseReviews extends AppCompatActivity {
             ratingBar4.setIsIndicator(true);
             ratingBar5.setIsIndicator(true);
         }
+    }
+
+    public void setIcons(){
+        try {
+            imageUrl1 = "http://mungovin.000webhostapp.com/verifilm/icons/" + reviewFilmIDs.get(0 + counter) + ".ico.jpg";
+            System.out.println("imageUrl1 = ...");
+            loadImageFromUrl(imageUrl1, imageButton1);
+            System.out.println("loadImageFromUrl(1)");
+            imageUrl2 = "http://mungovin.000webhostapp.com/verifilm/icons/" + reviewFilmIDs.get(1 + counter) + ".ico.jpg";
+            System.out.println("imageUrl2 = ...");
+            loadImageFromUrl(imageUrl2, imageButton2);
+            System.out.println("loadImageFromUrl(2)");
+            imageUrl3 = "http://mungovin.000webhostapp.com/verifilm/icons/" + reviewFilmIDs.get(2 + counter) + ".ico.jpg";
+            System.out.println("imageUrl3 = ...");
+            loadImageFromUrl(imageUrl3, imageButton3);
+            System.out.println("loadImageFromUrl(3)");
+            imageUrl4 = "http://mungovin.000webhostapp.com/verifilm/icons/" + reviewFilmIDs.get(3 + counter) + ".ico.jpg";
+            System.out.println("imageUrl4 = ...");
+            loadImageFromUrl(imageUrl4, imageButton4);
+            System.out.println("loadImageFromUrl(4)");
+            imageUrl5 = "http://mungovin.000webhostapp.com/verifilm/icons/" + reviewFilmIDs.get(4 + counter) + ".ico.jpg";
+            System.out.println("imageUrl5 = ...");
+            loadImageFromUrl(imageUrl5, imageButton5);
+            System.out.println("loadImageFromUrl(5)");
+        }catch(Exception e){
+            //TODO
+            System.out.println("error in setIcons()");
+        }
+
+    }
+
+    private void loadImageFromUrl(String url, ImageButton imageButton){
+        Picasso.with(this).load(url).placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(imageButton,new com.squareup.picasso.Callback(){
+
+                    @Override
+                    public void onSuccess() {
+                        //TODO
+                    }
+
+                    @Override
+                    public void onError() {
+                        //TODO
+                    }
+                });
     }
 
     public void setVisibilityFields(){
@@ -187,6 +246,7 @@ public class BrowseReviews extends AppCompatActivity {
             buttonNext.setEnabled(false);
         }
         setVisibilityFields();
+        setIcons();
     }
 
     public void previous(View view) throws InterruptedException {
@@ -206,6 +266,7 @@ public class BrowseReviews extends AppCompatActivity {
         ratingBar4.setVisibility(View.VISIBLE);
         ratingBar5.setVisibility(View.VISIBLE);
         setVisibilityFields();
+        setIcons();
     }
 
     public void responseCheck() throws InterruptedException {
@@ -214,7 +275,7 @@ public class BrowseReviews extends AppCompatActivity {
         {
             Thread.sleep(100);
             responseTimer++;
-            if (responseTimer >=50)
+            if (responseTimer >=BackgroundSettings.responseLimit)
             {
                 startActivity(new Intent(this, Home.class));
                 Toast.makeText(getApplicationContext(), "Connection timed out.", Toast.LENGTH_LONG).show();
@@ -224,80 +285,86 @@ public class BrowseReviews extends AppCompatActivity {
     }
 
     public void selectedReviewButton1(View view) throws InterruptedException {
-        BackgroundTask backgroundTask = new BackgroundTask(this);
-        backgroundTask.execute("selectedReview", reviewIDs.get(0+counter));
+        BackgroundTask selectedReview = new BackgroundTask(this);
+        selectedReview.execute("selectedReview", reviewIDs.get(0+counter));
         responseCheck();
         if (response == true)
         {
             responseTimer=0;
             selectedReviewID = reviewIDs.get(0+counter);
-            selectedSummary = backgroundTask.selectedSummary;
-            selectedFullReview = backgroundTask.selectedReview;
-            selectedReviewFilm = textViewFilmTitle1.getText().toString();
+            selectedSummary = selectedReview.selectedSummary;
+            selectedFullReview = selectedReview.selectedReview;
+            selectedReviewFilmID = reviewFilmIDs.get(0+counter);
+            selectedReviewFilmName = textViewFilmTitle1.getText().toString();
             selectedReviewRating = ratingBar1.getRating();
+
             startActivity(new Intent(this, SelectedReview.class));
         }
     }
 
     public void selectedReviewButton2(View view) throws InterruptedException {
-        BackgroundTask backgroundTask = new BackgroundTask(this);
-        backgroundTask.execute("selectedReview", reviewIDs.get(1+counter));
+        BackgroundTask selectedReview = new BackgroundTask(this);
+        selectedReview.execute("selectedReview", reviewIDs.get(1+counter));
         responseCheck();
         if (response == true)
         {
             responseTimer=0;
             selectedReviewID = reviewIDs.get(1+counter);
-            selectedSummary = backgroundTask.selectedSummary;
-            selectedFullReview = backgroundTask.selectedReview;
-            selectedReviewFilm = textViewFilmTitle2.getText().toString();
+            selectedSummary = selectedReview.selectedSummary;
+            selectedFullReview = selectedReview.selectedReview;
+            selectedReviewFilmID = reviewFilmIDs.get(1+counter);
+            selectedReviewFilmName = textViewFilmTitle2.getText().toString();
             selectedReviewRating = ratingBar2.getRating();
             startActivity(new Intent(this, SelectedReview.class));
         }
     }
 
     public void selectedReviewButton3(View view) throws InterruptedException {
-        BackgroundTask backgroundTask = new BackgroundTask(this);
-        backgroundTask.execute("selectedReview", reviewIDs.get(2+counter));
+        BackgroundTask selectedReview = new BackgroundTask(this);
+        selectedReview.execute("selectedReview", reviewIDs.get(2+counter));
         responseCheck();
         if (response == true)
         {
             responseTimer=0;
             selectedReviewID = reviewIDs.get(2+counter);
-            selectedSummary = backgroundTask.selectedSummary;
-            selectedFullReview = backgroundTask.selectedReview;
-            selectedReviewFilm = textViewFilmTitle3.getText().toString();
+            selectedSummary = selectedReview.selectedSummary;
+            selectedFullReview = selectedReview.selectedReview;
+            selectedReviewFilmID = reviewFilmIDs.get(2+counter);
+            selectedReviewFilmName = textViewFilmTitle3.getText().toString();
             selectedReviewRating = ratingBar3.getRating();
             startActivity(new Intent(this, SelectedReview.class));
         }
     }
 
     public void selectedReviewButton4(View view) throws InterruptedException {
-        BackgroundTask backgroundTask = new BackgroundTask(this);
-        backgroundTask.execute("selectedReview", reviewIDs.get(3+counter));
+        BackgroundTask selectedReview = new BackgroundTask(this);
+        selectedReview.execute("selectedReview", reviewIDs.get(3+counter));
         responseCheck();
         if (response == true)
         {
             responseTimer=0;
             selectedReviewID = reviewIDs.get(3+counter);
-            selectedSummary = backgroundTask.selectedSummary;
-            selectedFullReview = backgroundTask.selectedReview;
-            selectedReviewFilm = textViewFilmTitle4.getText().toString();
+            selectedSummary = selectedReview.selectedSummary;
+            selectedFullReview = selectedReview.selectedReview;
+            selectedReviewFilmID = reviewFilmIDs.get(3+counter);
+            selectedReviewFilmName = textViewFilmTitle4.getText().toString();
             selectedReviewRating = ratingBar4.getRating();
             startActivity(new Intent(this, SelectedReview.class));
         }
     }
 
     public void selectedReviewButton5(View view) throws InterruptedException {
-        BackgroundTask backgroundTask = new BackgroundTask(this);
-        backgroundTask.execute("selectedReview", reviewIDs.get(4+counter));
+        BackgroundTask selectedReview = new BackgroundTask(this);
+        selectedReview.execute("selectedReview", reviewIDs.get(4+counter));
         responseCheck();
         if (response == true)
         {
             responseTimer=0;
             selectedReviewID = reviewIDs.get(4+counter);
-            selectedSummary = backgroundTask.selectedSummary;
-            selectedFullReview = backgroundTask.selectedReview;
-            selectedReviewFilm = textViewFilmTitle5.getText().toString();
+            selectedSummary = selectedReview.selectedSummary;
+            selectedFullReview = selectedReview.selectedReview;
+            selectedReviewFilmID = reviewFilmIDs.get(4+counter);
+            selectedReviewFilmName = textViewFilmTitle5.getText().toString();
             selectedReviewRating = ratingBar5.getRating();
             startActivity(new Intent(this, SelectedReview.class));
         }

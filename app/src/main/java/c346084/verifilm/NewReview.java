@@ -5,37 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.math.RoundingMode;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +51,7 @@ public class NewReview extends AppCompatActivity {
             df.setRoundingMode(RoundingMode.DOWN);
             longitudeString = df.format(longitude);
             latitudeString = df.format(latitude);
+            System.out.println(longitudeString + " " + latitudeString);
         } else {
             longitudeString = "0.00";
             latitudeString = "0.00";
@@ -99,7 +76,7 @@ public class NewReview extends AppCompatActivity {
         while (response == false) {
             Thread.sleep(100);
             responseTimer++;
-            if (responseTimer >= 50) {
+            if (responseTimer >= BackgroundSettings.responseLimit) {
                 startActivity(new Intent(this, Home.class));
                 Toast.makeText(getApplicationContext(), "Connection timed out.", Toast.LENGTH_LONG).show();
                 break;

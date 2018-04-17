@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#313131"
     tools:context="c346084.verifilm.BrowseReviews">
 
 
@@ -23,6 +24,7 @@
             android:layout_height="35dp"
             android:text="My Reviews"
             android:textAlignment="center"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textSize="18sp" />
 
         <TableLayout
@@ -54,7 +56,8 @@
                         android:id="@+id/textViewFilmTitle1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                     <RatingBar
                         android:id="@+id/ratingBar1"
@@ -90,7 +93,8 @@
                         android:id="@+id/textViewFilmTitle2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                     <RatingBar
                         android:id="@+id/ratingBar2"
@@ -126,7 +130,8 @@
                         android:id="@+id/textViewFilmTitle3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                     <RatingBar
                         android:id="@+id/ratingBar3"
@@ -162,7 +167,8 @@
                         android:id="@+id/textViewFilmTitle4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                     <RatingBar
                         android:id="@+id/ratingBar4"
@@ -198,7 +204,8 @@
                         android:id="@+id/textViewFilmTitle5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                     <RatingBar
                         android:id="@+id/ratingBar5"

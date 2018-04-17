@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#313131"
     tools:context="c346084.verifilm.NewReview"
     tools:layout_editor_absoluteY="81dp">
 
@@ -24,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="23dp"
         android:text="No cinema"
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/textViewStaticMessage"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="26dp"
         android:text="detected within local proximity."
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="parent"

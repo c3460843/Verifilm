@@ -32,7 +32,7 @@ public class SelectListing extends AppCompatActivity {
             {
                 Thread.sleep(100);
                 responseTimer++;
-                if (responseTimer >=50)
+                if (responseTimer >=BackgroundSettings.responseLimit)
                 {
                     startActivity(new Intent(this, Home.class));
                     Toast.makeText(getApplicationContext(), "Connection timed out.", Toast.LENGTH_LONG).show();

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#313131"
+    tools:context="c346084.verifilm.Settings">
+
+    <LinearLayout
+        android:layout_width="356dp"
+        android:layout_height="561dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:text="Settings"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/switchResponseLimit"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="180dp" />
+
+        <Switch
+            android:id="@+id/switchResponse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Increase wait for response time (from 5s to 30s)"
+            android:textAlignment="viewStart"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textOff="OFF (5s)"
+            android:textOn="ON (30s)" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

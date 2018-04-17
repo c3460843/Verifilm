@@ -2,13 +2,10 @@ package c346084.verifilm;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.app.Activity;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.util.Objects;
 
 public class MainActivity extends Activity{
     static String userID;
@@ -24,6 +21,7 @@ public class MainActivity extends Activity{
         setContentView(R.layout.activity_main);
         user_name = findViewById(R.id.user_name);
         user_pass = findViewById(R.id.user_pass);
+        BackgroundSettings backgroundSettings = new BackgroundSettings();
     }
 
     public void userReg(View view)
@@ -41,7 +39,7 @@ public class MainActivity extends Activity{
         {
             Thread.sleep(100);
             responseTimer++;
-            if (responseTimer >=50)
+            if (responseTimer >=BackgroundSettings.responseLimit)
             {
                 startActivity(new Intent(this, Home.class));
                 Toast.makeText(getApplicationContext(), "Connection timed out.", Toast.LENGTH_LONG).show();

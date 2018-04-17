@@ -34,7 +34,8 @@
         <activity android:name=".SelectListing" />
         <activity android:name=".BrowseReviews" />
         <activity android:name=".SelectedReview" />
-        <activity android:name=".FullReview"></activity>
+        <activity android:name=".FullReview" />
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#313131"
     tools:context="c346084.verifilm.FullReview">
 
     <EditText
@@ -12,6 +13,7 @@
         android:layout_height="471dp"
         android:ems="10"
         android:inputType="textMultiLine"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
         app:layout_constraintBottom_toTopOf="@+id/buttonSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -24,4 +24,9 @@ public class Home extends AppCompatActivity {
     {
         startActivity(new Intent(this,BrowseReviews.class));
     }
+
+    public void settings(View view)
+    {
+        startActivity(new Intent(this,Settings.class));
+    }
 }

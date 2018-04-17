@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#313131"
     tools:context="c346084.verifilm.SelectFilm">
 
     <Spinner
         android:id="@+id/spinner_film"
         android:layout_width="337dp"
         android:layout_height="42dp"
+        android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
         app:layout_constraintBottom_toTopOf="@+id/button_fcontinue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -21,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select a film:"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
         app:layout_constraintBottom_toTopOf="@+id/spinner_film"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
