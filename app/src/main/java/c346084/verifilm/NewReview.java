@@ -88,6 +88,7 @@ public class NewReview extends AppCompatActivity {
         getLocation();
         try {
             populate();
+            Toast.makeText(getApplicationContext(), "Location refreshed.", Toast.LENGTH_LONG).show();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
