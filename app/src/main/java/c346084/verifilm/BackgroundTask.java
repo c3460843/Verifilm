@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by C3460843 on 24/11/2017.
+ * Created by C3460843 on 24/01/2018.
  */
 
 public class BackgroundTask extends AsyncTask<String,Void,String> {
@@ -49,7 +49,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... params) {
         String localIP = "10.0.2.2";
         String liveIP = "mungovin.000webhostapp.com";
-        String reg_url = "http://" + liveIP + "/verifilm/register.php";
         String login_url = "http://" + liveIP + "/verifilm/login.php";
         String gc_url = "http://" + liveIP + "/verifilm/getCinemas.php";
         String gf_url = "http://" + liveIP + "/verifilm/getFilms.php";
@@ -61,34 +60,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
         String method = params[0];
 
         switch (method) {
-            case "register":
-                String name = params[1];
-                String user_name = params[2];
-                String user_pass = params[3];
-                try {
-                    URL url = new URL(reg_url);
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                    httpURLConnection.setRequestMethod("POST");
-                    httpURLConnection.setDoOutput(true);
-                    OutputStream outputStream = httpURLConnection.getOutputStream();
-                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                    String data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" +
-                            URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8") + "&" +
-                            URLEncoder.encode("user_pass", "UTF-8") + "=" + URLEncoder.encode(user_pass, "UTF-8");
-                    bufferedWriter.write(data);
-                    bufferedWriter.flush();
-                    bufferedWriter.close();
-                    outputStream.close();
-                    InputStream inputStream = httpURLConnection.getInputStream();
-                    inputStream.close();
-                    //httpURLConnection.connect();
-                    httpURLConnection.disconnect();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
             case "login":
                 String login_name = params[1];
                 String login_pass = params[2];
@@ -157,7 +128,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                             cinemaID = splitLine[0];
                             cinemaName = splitLine[1];
                         } catch (java.lang.ArrayIndexOutOfBoundsException e) {
-                            //TO DO
+                            //TODO
                         }
                     }
                     bufferedReader.close();

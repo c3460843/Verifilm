@@ -7,6 +7,10 @@ import android.app.Activity;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Created by C3460843 on 24/01/2018.
+ */
+
 public class MainActivity extends Activity{
     static String userID;
     static boolean userAuthenticated;
@@ -21,12 +25,6 @@ public class MainActivity extends Activity{
         setContentView(R.layout.activity_main);
         user_name = findViewById(R.id.user_name);
         user_pass = findViewById(R.id.user_pass);
-        BackgroundSettings backgroundSettings = new BackgroundSettings();
-    }
-
-    public void userReg(View view)
-    {
-        startActivity(new Intent(this,Register.class));
     }
 
     public void userLogin(View view) throws InterruptedException {

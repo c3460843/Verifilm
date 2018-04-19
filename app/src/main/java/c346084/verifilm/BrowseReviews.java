@@ -9,12 +9,13 @@ import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by C3460843 on 18/02/2018.
+ */
 
 public class BrowseReviews extends AppCompatActivity {
 
@@ -151,7 +152,6 @@ public class BrowseReviews extends AppCompatActivity {
             System.out.println("loadImageFromUrl(5)");
         }catch(Exception e){
             //TODO
-            System.out.println("error in setIcons()");
         }
 
     }

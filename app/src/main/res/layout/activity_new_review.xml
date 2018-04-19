@@ -14,11 +14,23 @@
         android:layout_height="wrap_content"
         android:onClick="selectFilm"
         android:text="Continue"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRefresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewStaticMessage" />
+
+    <Button
+        android:id="@+id/buttonRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="refresh"
+        android:text="Refresh"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/continue_button" />
 
     <TextView
         android:id="@+id/textViewCinema"
@@ -31,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
@@ -41,21 +53,22 @@
         android:text="detected within local proximity."
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+        app:layout_constraintBottom_toTopOf="@+id/continue_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCinema" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewCinema"
+        app:layout_constraintVertical_bias="0.499" />
 
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="395dp"
         android:layout_height="88dp"
-        app:layout_constraintBottom_toTopOf="@+id/continue_button"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCinema"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewStaticMessage">
+        app:layout_constraintTop_toTopOf="parent">
 
     </GridLayout>
 

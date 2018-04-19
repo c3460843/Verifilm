@@ -17,6 +17,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:srcCompat="@mipmap/ic_settings_round" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"

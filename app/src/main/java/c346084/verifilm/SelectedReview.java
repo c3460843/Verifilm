@@ -19,6 +19,10 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * Created by C3460843 on 17/03/2018.
+ */
+
 public class SelectedReview extends AppCompatActivity {
 
     String url;

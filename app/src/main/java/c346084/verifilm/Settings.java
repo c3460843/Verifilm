@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.widget.Switch;
 import android.widget.CompoundButton;
 
+/**
+ * Created by C3460843 on 17/04/2018.
+ */
+
 public class Settings extends AppCompatActivity {
 
     @Override
