@@ -69,6 +69,16 @@ public class ReviewForm extends AppCompatActivity {
                 });
     }
 
+    public void loadImageFromGallery (View view){
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        int RESULT_LOAD_IMG = 0;
+        startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+        //TODO Image needs uploading to server.
+    }
+
+
+
     public void addListenerOnRatingBar()
     {
         ratingBar = findViewById(R.id.ratingBar);

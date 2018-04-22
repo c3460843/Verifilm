@@ -10,8 +10,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +44,7 @@ public class NewReview extends AppCompatActivity {
         continueButton = findViewById(R.id.continue_button);
         textViewCinema = findViewById(R.id.textViewCinema);
 
-        getLocation ();
+        getLocation();
 
         try {
             populate();
@@ -51,7 +53,7 @@ public class NewReview extends AppCompatActivity {
         }
     }
 
-    public void getLocation (){
+    public void getLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(NewReview.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -60,6 +62,7 @@ public class NewReview extends AppCompatActivity {
         }
         LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
         if (location == null) {
             location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         }
@@ -96,7 +99,8 @@ public class NewReview extends AppCompatActivity {
 
 
     public void populate() throws InterruptedException {
-        if (location != null) {
+        if(longitudeString != null)
+        {
             response = false;
             BackgroundTask backgroundTask = new BackgroundTask(this);
             backgroundTask.execute("cinemas", longitudeString, latitudeString);
@@ -117,12 +121,14 @@ public class NewReview extends AppCompatActivity {
                 SelectListing.cinemaName = cinemaName;
                 SelectListing.cinemaID = cinemaID;
                 textViewCinema.setText(cinemaName);
+                continueButton.setEnabled(true);
             }
         }
-        else
-        {
+        if(cinemaID == null){
             textViewCinema.setText("No cinema");
+            continueButton.setEnabled(false);
         }
+
     }
 }
 

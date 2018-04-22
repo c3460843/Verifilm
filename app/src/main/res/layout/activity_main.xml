@@ -7,6 +7,16 @@
     android:background="#313131"
     tools:context="c346084.verifilm.MainActivity">
 
+    <Space
+        android:id="@+id/space3"
+        android:layout_width="23dp"
+        android:layout_height="67dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_pass" />
+
     <EditText
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
@@ -29,7 +39,7 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/space3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_pass" />
+        app:layout_constraintTop_toBottomOf="@+id/space3" />
 
     <TextView
         android:id="@+id/title"

@@ -46,7 +46,7 @@
     <EditText
         android:id="@+id/editTextSummary"
         android:layout_width="330dp"
-        android:layout_height="219dp"
+        android:layout_height="120dp"
         android:ems="10"
         android:hint="Summary"
         android:inputType="textMultiLine"
@@ -73,6 +73,7 @@
         android:id="@+id/imageButtonPhoto"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:onClick="loadImageFromGallery"
         app:layout_constraintBottom_toTopOf="@+id/textViewPhoto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

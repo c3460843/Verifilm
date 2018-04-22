@@ -33,7 +33,7 @@
     <EditText
         android:id="@+id/editTextSummary"
         android:layout_width="330dp"
-        android:layout_height="219dp"
+        android:layout_height="120dp"
         android:ems="10"
         android:inputType="textMultiLine"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
